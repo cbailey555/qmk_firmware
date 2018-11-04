@@ -5,9 +5,7 @@
 #define LAYER_2       2
 #define LAYER_3       3
 #define LAYER_4       4
-#define LAYER_5       5
-#define LAYER_6       6
-
+//#define LAYER_5       5
 
 // これって、layerが始まるところをマークします。
 
@@ -20,6 +18,7 @@ enum custom_keycodes {
     I3UP,
     I3DOWN,
     I3CLOSE,
+    I3NEW,
     WS0,
     WS1,
     WS2,
@@ -31,7 +30,12 @@ enum custom_keycodes {
     WS8,
     WS9,
     NEWTAB,
-    CLOSETAB
+    CLOSETAB,
+    HOSTKEY,
+    HOSTTHENRIGHT,
+//    HSS, // host screenshot; do this later through I3
+    GUESTSCREENSHOT,
+
 };
 
 
@@ -49,16 +53,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_1] = LAYOUT_base( \
     DF(DEFAULT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, DF(LAYER_3), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, MY_CUSTOM_MACRO, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, DF(LAYER_4), DF(LAYER_2), _______, _______, _______, _______, _______, _______, _______, \
+    _______, MY_CUSTOM_MACRO, _______, _______, KC_RCTL, _______, _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, KC_RCTL, DF(LAYER_4), DF(LAYER_2), _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______,          DF(DEFAULT_LAYER), KC_LEAD, KC_SPC,          _______, _______, _______, _______, _______ \
   ),
 
 // Num/math
   [LAYER_2] = LAYOUT_base( \
-    DF(DEFAULT_LAYER), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+    DF(DEFAULT_LAYER), KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, \
     _______, _______, _______, KC_5, _______, _______, _______, _______, _______, KC_0, _______, _______, _______, _______, \
-    _______, KC_1, KC_6, KC_4, _______, KC_7, KC_8, _______, _______, _______, _______, _______, _______, \
+    _______, KC_1, KC_6, KC_4, _______, KC_7, KC_8, _______, _______, KC_U, _______, _______, _______, \
     _______, _______, _______, KC_3, _______, KC_2, KC_9, _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______,          DF(DEFAULT_LAYER), KC_LEAD, KC_SPC,          _______, _______, _______, _______, _______ \
   ),
@@ -67,8 +71,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_3] = LAYOUT_base( \
     DF(DEFAULT_LAYER), _______, _______, _______, _______, _______, _______, _______, WS8, _______, _______, _______, _______, \
-    _______, KC_Q, _______, WS5, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, WS1, WS6, WS4, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, _______, _______, KC_ENT, \
+    _______, I3CLOSE, _______, WS5, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+    _______, WS1, WS6, WS4, _______, _______, I3LEFT, I3DOWN, I3UP, I3RIGHT, _______, _______, I3NEW, \
     OSM(MOD_LSFT), _______, _______, WS3, _______, WS2, WS9, _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______,         DF(DEFAULT_LAYER), KC_LEAD, KC_SPC,          _______, _______, _______, _______, _______ \
   ),
@@ -82,21 +86,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______,          DF(DEFAULT_LAYER), KC_LEAD, KC_SPC,          _______, _______, _______, _______, _______ \
   ),
 
+/*
+ editor layer
   [LAYER_5] = LAYOUT_base( \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, CLOSETAB, _______, _______, NEWTAB, _______, _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, BTL, _______, _______, BTR, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______,          _______, _______, _______,          _______, _______, _______, _______, _______ \
+    _______, _______, _______,          DF(DEFAULT_LAYER), KC_LEAD, KC_SPC,          _______, _______, _______, _______, _______ \
   ),
-
-  [LAYER_6] = LAYOUT_base( \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______,          _______, _______, _______,          _______, _______, _______, _______, _______ \
-  ),
+  */
 
 };
 
@@ -136,7 +135,7 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
 
-
+// < = lt
     SEQ_TWO_KEYS(KC_L, KC_T) {
       register_code(KC_LSHIFT);
       register_code(KC_COMMA);
@@ -144,6 +143,7 @@ void matrix_scan_user(void) {
       unregister_code(KC_COMMA);
     }
 
+// > = gt
     SEQ_TWO_KEYS(KC_G, KC_T) {
       register_code(KC_LSHIFT);
       register_code(KC_DOT);
@@ -151,6 +151,7 @@ void matrix_scan_user(void) {
       unregister_code(KC_DOT);
     }
 
+// next tab = n t
     SEQ_TWO_KEYS(KC_N, KC_T) {
       register_code(KC_LCTRL);
       register_code(KC_LALT);
@@ -162,6 +163,7 @@ void matrix_scan_user(void) {
 
 
 
+
 // i3 new pane
     SEQ_TWO_KEYS(KC_W, KC_N) {
       register_code(KC_LGUI);
@@ -170,74 +172,6 @@ void matrix_scan_user(void) {
       unregister_code(KC_ENT);
     }
 
-// i3 one left
-    SEQ_TWO_KEYS(KC_W, KC_L) {
-      register_code(KC_LGUI);
-      register_code(KC_LEFT);
-      unregister_code(KC_LGUI);
-      unregister_code(KC_LEFT);
-    }
-// i3 two left
-    SEQ_THREE_KEYS(KC_W, KC_2, KC_L) {
-      register_code(KC_LGUI);
-      register_code(KC_LEFT);
-      unregister_code(KC_LEFT);
-      register_code(KC_LEFT);
-      unregister_code(KC_LEFT);
-      unregister_code(KC_LGUI);
-    }
-
-// i3 one right
-    SEQ_TWO_KEYS(KC_W, KC_R) {
-      register_code(KC_LGUI);
-      register_code(KC_RIGHT);
-      unregister_code(KC_LGUI);
-      unregister_code(KC_RIGHT);
-    }
-// i3 two right
-    SEQ_THREE_KEYS(KC_W, KC_2, KC_R) {
-      register_code(KC_LGUI);
-      register_code(KC_RIGHT);
-      unregister_code(KC_RIGHT);
-      register_code(KC_RIGHT);
-      unregister_code(KC_RIGHT);
-      unregister_code(KC_LGUI);
-    }
-
-// i3 one up
-    SEQ_TWO_KEYS(KC_W, KC_R) {
-      register_code(KC_LGUI);
-      register_code(KC_UP);
-      unregister_code(KC_LGUI);
-      unregister_code(KC_UP);
-    }
-// i3 two up
-    SEQ_THREE_KEYS(KC_W, KC_2, KC_R) {
-      register_code(KC_LGUI);
-      register_code(KC_UP);
-      unregister_code(KC_UP);
-      register_code(KC_UP);
-      unregister_code(KC_UP);
-      unregister_code(KC_LGUI);
-    }
-
-
-// i3 one down
-    SEQ_TWO_KEYS(KC_W, KC_R) {
-      register_code(KC_LGUI);
-      register_code(KC_DOWN);
-      unregister_code(KC_LGUI);
-      unregister_code(KC_DOWN);
-    }
-// i3 two down
-    SEQ_THREE_KEYS(KC_W, KC_2, KC_R) {
-      register_code(KC_LGUI);
-      register_code(KC_DOWN);
-      unregister_code(KC_DOWN);
-      register_code(KC_DOWN);
-      unregister_code(KC_DOWN);
-      unregister_code(KC_LGUI);
-    }
 
    SEQ_TWO_KEYS(KC_N, KC_T) {
       register_code(KC_LCTRL);
@@ -248,10 +182,21 @@ void matrix_scan_user(void) {
 
 
 
+// Go to workspace 0; W 0
     SEQ_TWO_KEYS(KC_W, KC_0) {
       register_code(KC_LALT);
       register_code(0);
       unregister_code(KC_LALT);
+      unregister_code(0);
+    }
+
+// Move window to workspace 0; M W 0
+    SEQ_THREE_KEYS(KC_M, KC_W, KC_0) {
+      register_code(KC_LALT);
+      register_code(KC_LSHIFT);
+      register_code(0);
+      unregister_code(KC_LALT);
+      unregister_code(KC_LSHIFT);
       unregister_code(0);
     }
 
@@ -274,12 +219,109 @@ void matrix_scan_user(void) {
       SEND_STRING(" = ");
     }
 
+// Double quote sequence
+    SEQ_TWO_KEYS(KC_D, KC_K) {
+      SEND_STRING("\"\"");
+      register_code(KC_LEFT);
+      register_code(KC_LEFT);
+    }
+
+    SEQ_TWO_KEYS(KC_P, KC_A) {
+      SEND_STRING("()");
+      register_code(KC_LEFT);
+      register_code(KC_LEFT);
+    }
+
+    SEQ_TWO_KEYS(KC_D, KC_O) {
+      SEND_STRING(".");
+    }
+
+    SEQ_TWO_KEYS(KC_P, KC_E) {
+      SEND_STRING(".");
+    }
+
+    SEQ_THREE_KEYS(KC_M, KC_D, KC_C) {
+      SEND_STRING("```");
+      register_code(KC_ENTER);
+      unregister_code(KC_ENTER);
+      SEND_STRING("```");
+      register_code(KC_UP);
+      unregister_code(KC_UP);
+      register_code(KC_ENTER);
+      unregister_code(KC_ENTER);
+    }
+
+// guest screen shot = g s s
+    SEQ_THREE_KEYS(KC_G, KC_S, KC_S) {
+      register_code(KC_RCTRL);
+      register_code(KC_E);
+      unregister_code(KC_RCTRL);
+      unregister_code(KC_E);
+    }
+
+// tilde = t i l
+    SEQ_THREE_KEYS(KC_T, KC_I, KC_L) {
+      register_code(KC_LSHIFT);
+      register_code(KC_GRAVE);
+      unregister_code(KC_GRAVE);
+      unregister_code(KC_LSHIFT);
+    }
+
 /*
-    SEQ_THREE_KEYS(KC_E, KC_S, KC_C) {
-      register_code(DF(DEFAULT_LAYER));
-      unregister_code(DF(DEFAULT_LAYER));
+// grave = g r a
+    SEQ_THREE_KEYS(KC_G, KC_R, KC_A) {
+      register_code(KC_GRAVE);
+      unregister_code(KC_GRAVE);
     }
     */
+
+// pipe =  p i p
+    SEQ_THREE_KEYS(KC_P, KC_I, KC_P) {
+      register_code(KC_LSHIFT);
+      register_code(KC_BSLASH);
+      unregister_code(KC_BSLASH);
+      unregister_code(KC_LSHIFT);
+    }
+
+    SEQ_THREE_KEYS(KC_H, KC_W, KC_R) {
+      SEND_STRING(
+      SS_DOWN(X_RCTRL)
+      SS_TAP(E)
+      SS_UP(X_RCTRL)
+      SS_DOWN(X_LALT)
+      SS_TAP(X_RIGHT)
+      SS_UP(X_LALT)
+      );
+    }
+
+    SEQ_THREE_KEYS(KC_L, KC_A, KC_M) {
+      SEND_STRING("λ");
+    }
+
+/*
+ ampersand = a m p
+    SEQ_THREE_KEYS(KC_P, KC_I, KC_P) {
+      register_code(KC_LSHIFT);
+      register_code(KC_7);
+      unregister_code(KC_7);
+      unregister_code(KC_LSHIFT);
+    }
+    */
+
+/*
+ exponent = p o w
+    SEQ_THREE_KEYS(KC_P, KC_I, KC_P) {
+      register_code(KC_LSHIFT);
+      register_code(KC_7);
+      unregister_code(KC_7);
+      unregister_code(KC_LSHIFT);
+    }
+    */
+
+
+    SEQ_THREE_KEYS(KC_H, KC_O, KC_M) {
+      SEND_STRING("~/");
+    }
 
   }
 }
@@ -302,138 +344,146 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(
                   SS_DOWN(X_LSHIFT)
                   SS_DOWN(X_LCTRL)
-                  SS_DOWN(X_TAB)
+                  SS_TAP(X_TAB)
                   SS_UP(X_LSHIFT)
                   SS_UP(X_LCTRL)
-                  SS_UP(X_TAB)
                   );
             case BTR:
                 SEND_STRING(
                   SS_DOWN(X_LCTRL)
-                  SS_DOWN(X_TAB)
+                  SS_TAP(X_TAB)
                   SS_UP(X_LCTRL)
-                  SS_UP(X_TAB)
                   );
+            case I3NEW:
+                SEND_STRING(
+                  SS_DOWN(X_LALT)
+                  SS_TAP(X_ENTER)
+                  SS_UP(X_LALT)
+                );
             case I3LEFT:
                 SEND_STRING(
                   SS_DOWN(X_LALT)
-                  SS_DOWN(X_LEFT)
+                  SS_TAP(X_LEFT)
                   SS_UP(X_LALT)
-                  SS_UP(X_LEFT)
                 );
             case I3RIGHT:
                 SEND_STRING(
                   SS_DOWN(X_LALT)
-                  SS_DOWN(X_RIGHT)
+                  SS_TAP(X_RIGHT)
                   SS_UP(X_LALT)
-                  SS_UP(X_RIGHT)
                 );
             case I3UP:
                 SEND_STRING(
                   SS_DOWN(X_LALT)
-                  SS_DOWN(X_UP)
+                  SS_TAP(X_UP)
                   SS_UP(X_LALT)
-                  SS_UP(X_UP)
                 );
             case I3DOWN:
                 SEND_STRING(
                   SS_DOWN(X_LALT)
-                  SS_DOWN(X_DOWN)
+                  SS_TAP(X_DOWN)
                   SS_UP(X_LALT)
-                  SS_UP(X_DOWN)
                 );
                case I3CLOSE:
                 SEND_STRING(
                   SS_DOWN(X_LALT)
                   SS_DOWN(X_LSHIFT)
-                  SS_DOWN(X_Q)
+                  SS_TAP(X_Q)
                   SS_UP(X_LALT)
                   SS_UP(X_LSHIFT)
-                  SS_UP(X_LALT)
                 );
                 case WS0:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_0)
+                    SS_TAP(X_0)
                     SS_UP(X_LALT)
-                    SS_UP(X_0)
                 );
                  case WS1:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_1)
+                    SS_TAP(X_1)
                     SS_UP(X_LALT)
-                    SS_UP(X_1)
                 );
                   case WS2:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_2)
+                    SS_TAP(X_2)
                     SS_UP(X_LALT)
-                    SS_UP(X_2)
                 );
                    case WS3:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_3)
+                    SS_TAP(X_3)
                     SS_UP(X_LALT)
-                    SS_UP(X_3)
                 );
                     case WS4:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_4)
+                    SS_TAP(X_4)
                     SS_UP(X_LALT)
-                    SS_UP(X_0)
                 );
                      case WS5:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_5)
+                    SS_TAP(X_5)
                     SS_UP(X_LALT)
-                    SS_UP(X_5)
                 );
                  case WS6:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_6)
+                    SS_TAP(X_6)
                     SS_UP(X_LALT)
-                    SS_UP(X_6)
                 );
                  case WS7:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_7)
+                    SS_TAP(X_7)
                     SS_UP(X_LALT)
-                    SS_UP(X_7)
                 );
                      case WS8:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_8)
+                    SS_TAP(X_8)
                     SS_UP(X_LALT)
-                    SS_UP(X_8)
                 );
                  case WS9:
                   SEND_STRING(
                     SS_DOWN(X_LALT)
-                    SS_DOWN(X_9)
+                    SS_TAP(X_9)
                     SS_UP(X_LALT)
-                    SS_UP(X_9)
                 );              
                 case NEWTAB:
                   SEND_STRING(
                     SS_DOWN(X_LCTRL)
-                    SS_DOWN(X_T)
+                    SS_TAP(X_T)
                     SS_UP(X_LCTRL)
-                    SS_UP(X_T)
                   );
                   case CLOSETAB:
                   SEND_STRING(
                     SS_DOWN(X_LCTRL)
-                    SS_DOWN(X_W)
+                    SS_TAP(X_W)
                     SS_UP(X_LCTRL)
-                    SS_UP(X_W)
+                  );
+                  case GUESTSCREENSHOT:
+                  SEND_STRING(
+                    SS_DOWN(X_RCTRL)
+                    SS_TAP(X_E)
+                    SS_UP(X_RCTRL)
+                  );
+                  case HOSTKEY:
+                  SEND_STRING(
+                    SS_DOWN(X_RCTRL)
+                    SS_TAP(E)
+                    SS_UP(X_RCTRL)
+                  );
+                  case HOSTTHENRIGHT:
+                  SEND_STRING(
+                    SS_DOWN(X_RCTRL)
+                    SS_TAP(E)
+                    SS_UP(X_RCTRL)
+                    SS_DOWN(X_LALT)
+                    SS_TAP(X_RIGHT)
+                    SS_UP(X_LALT)
                   );
                 return false;
         }
