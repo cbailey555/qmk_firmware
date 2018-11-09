@@ -16,7 +16,7 @@
 
 #ifndef CONFIG_USER_H
 #define CONFIG_USER_H
-#define LEADER_TIMEOUT 3000
+#define LEADER_TIMEOUT 800
 
 #include "../../config.h"
 

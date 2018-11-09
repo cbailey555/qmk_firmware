@@ -29,8 +29,7 @@ enum custom_keycodes {
     WS9,
     NEWTAB,
     CLOSETAB,
-    HOSTKEY,
-    HOSTTHENRIGHT,
+    PAUSEGUEST,
 //    HSS, // host screenshot; do this later through I3
     GUESTSCREENSHOT,
 };
@@ -42,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,     KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,       KC_O,       KC_P,       KC_LBRC,    KC_RBRC,                KC_BSPC,    \
         KC_LCTRL,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,       KC_L,       KC_SCLN,    KC_QUOT,                            KC_ENT,     \
         OSM(MOD_LSFT),            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,       KC_COMM,    KC_DOT,     MT(MOD_RSFT, KC_SLSH),  KC_UP,      KC_F,  \
-        KC_CAPS,   KC_LGUI,    KC_LALT,    TO(L_1),       KC_LEAD, KC_SPACE,   KC_RALT,    KC_LEFT,             KC_DOWN,    KC_UP,    KC_RIGHT    \
+        KC_CAPS,   KC_LGUI,    KC_LALT,    TO(L_1),       KC_LEAD, KC_SPACE,   KC_RCTRL,    KC_LEFT,             KC_DOWN,    KC_UP,    KC_RIGHT    \
     ),
 
     [L_1] = LAYOUT_hhkb_arrow( \
@@ -65,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // i3 layer
     [L_3] = LAYOUT_hhkb_arrow( \
         TO(L_0),     KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   WS8,       KC_9,       KC_0,       KC_MINS,    KC_EQL,     KC_BSLS,    KC_GRAVE,     \
-        TO(L_0),     I3CLOSE,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   I3UP2,   KC_I,       WS0,       KC_P,       KC_LBRC,    KC_RBRC,                KC_BSPC,    \
+        TO(L_0),     I3CLOSE,   KC_W,   WS5,   KC_R,   KC_T,   KC_Y,   I3UP2,   KC_I,       WS0,       PAUSEGUEST,       KC_LBRC,    KC_RBRC,                KC_BSPC,    \
         KC_LCTRL,  WS1,   WS6,   WS4,   KC_F,   WS7,   I3LEFT,   I3DOWN,   I3UP,       I3RIGHT,       KC_SCLN,    KC_QUOT,                            I3NEW,     \
         OSM(MOD_LSFT),            KC_Z,   KC_X,   WS3,   KC_V,   WS2,   WS9,   KC_M,       KC_COMM,    KC_DOT,     MT(MOD_RSFT, KC_SLSH),  KC_UP,      KC_F,  \
         KC_CAPS,   KC_LGUI,    KC_LALT,    TO(L_1),       KC_LEAD, KC_SPACE,   KC_RALT,    KC_LEFT,             KC_DOWN,    KC_UP,    KC_RIGHT    \
@@ -85,8 +84,12 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
 
+
     SEQ_THREE_KEYS(KC_C, KC_E, KC_K) {
       SEND_STRING(" := ");
+    }
+    SEQ_FOUR_KEYS(KC_T, KC_A, KC_G, KC_S) {
+      SEND_STRING(" <> </> "SS_TAP(X_LEFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT));
     }
   }
 }
@@ -94,6 +97,7 @@ void matrix_scan_user(void) {
 
 
 
+// macros
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch(keycode) {
@@ -274,23 +278,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SS_UP(X_RCTRL)
                   );
                   return false;
-                  case HOSTKEY:
+                  case PAUSEGUEST:
                   SEND_STRING(
                     SS_DOWN(X_RCTRL)
-                    SS_TAP(E)
+                    SS_TAP(X_P)
                     SS_UP(X_RCTRL)
                   );
                   return false;
-                  case HOSTTHENRIGHT:
-                  SEND_STRING(
-                    SS_DOWN(X_RCTRL)
-                    SS_TAP(E)
-                    SS_UP(X_RCTRL)
-                    SS_DOWN(X_LALT)
-                    SS_TAP(X_RIGHT)
-                    SS_UP(X_LALT)
-                  );
-                return false;
         }
     }
     return true;
